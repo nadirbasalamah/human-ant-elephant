@@ -7,30 +7,43 @@ import (
 
 func main() {
 	var choiceIdx int
+	var continuePlaying string
 	var choices []string = []string{"Human", "Elephant", "Ant"}
 
-	fmt.Println("Please choose:")
-	for idx, c := range choices {
-		fmt.Printf("%d) %s\n", idx+1, c)
+	for {
+		fmt.Println("Please choose:")
+		for idx, c := range choices {
+			fmt.Printf("%d) %s\n", idx+1, c)
+		}
+
+		fmt.Print("Inser your choice here: ")
+		fmt.Scan(&choiceIdx)
+
+		var isValid bool = validateInput(choiceIdx, len(choices))
+
+		if isValid {
+			choiceIdx--
+		} else {
+			fmt.Println("invalid input, please enter input from 1-3")
+			return
+		}
+
+		playerChoice, opponentChoice := getChoices(choiceIdx, choices)
+
+		var winner string = checkWinner(playerChoice, opponentChoice)
+
+		fmt.Println(winner)
+
+		fmt.Print("Continue playing? (y/n): ")
+		fmt.Scan(&continuePlaying)
+
+		if continuePlaying == "n" {
+			fmt.Println("Bye...")
+			break
+		} else if continuePlaying != "y" && continuePlaying != "n" {
+			fmt.Println("please enter n to quit the game")
+		}
 	}
-
-	fmt.Print("Inser your choice here: ")
-	fmt.Scan(&choiceIdx)
-
-	var isValid bool = validateInput(choiceIdx, len(choices))
-
-	if isValid {
-		choiceIdx--
-	} else {
-		fmt.Println("invalid input, please enter input from 1-3")
-		return
-	}
-
-	playerChoice, opponentChoice := getChoices(choiceIdx, choices)
-
-	var winner string = checkWinner(playerChoice, opponentChoice)
-
-	fmt.Println(winner)
 }
 
 func validateInput(choiceIdx, numOfChoices int) bool {
