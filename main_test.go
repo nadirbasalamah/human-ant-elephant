@@ -26,3 +26,24 @@ func TestCheckWinner(t *testing.T) {
 		}
 	}
 }
+
+func TestValidateInput(t *testing.T) {
+	tests := []struct {
+		input    int
+		expected bool
+	}{
+		{1, true},
+		{2, true},
+		{3, true},
+		{-1, false},
+		{4, false},
+		{999, false},
+	}
+
+	for _, test := range tests {
+		result := validateInput(test.input, 3)
+		if result != test.expected {
+			t.Error("expected: ", test.expected, " got: ", result)
+		}
+	}
+}

@@ -25,29 +25,21 @@ func init() {
 }
 
 func main() {
-	var choiceIdx int
+	var playerChoiceIdx int
 	var continuePlaying string
 	var choices []string = []string{"Human", "Elephant", "Ant"}
 
 	for {
-		fmt.Println("Please choose:")
-		for idx, c := range choices {
-			fmt.Printf("%d) %s\n", idx+1, c)
+		for {
+			choiceIdx, isValid := mainMenu(choices)
+
+			if isValid {
+				playerChoiceIdx = choiceIdx
+				break
+			}
 		}
 
-		fmt.Print("Inser your choice here: ")
-		fmt.Scan(&choiceIdx)
-
-		var isValid bool = validateInput(choiceIdx, len(choices))
-
-		if isValid {
-			choiceIdx--
-		} else {
-			fmt.Println("invalid input, please enter input from 1-3")
-			return
-		}
-
-		playerChoice, opponentChoice := getChoices(choiceIdx, choices)
+		playerChoice, opponentChoice := getChoices(playerChoiceIdx, choices)
 
 		var winner string = checkWinner(playerChoice, opponentChoice)
 
@@ -64,6 +56,29 @@ func main() {
 		} else {
 			clearTerminal()
 		}
+	}
+}
+
+func mainMenu(choices []string) (int, bool) {
+	var choiceIdx int
+
+	fmt.Println("Please choose:")
+	for idx, c := range choices {
+		fmt.Printf("%d) %s\n", idx+1, c)
+	}
+
+	fmt.Print("Insert your choice here: ")
+	fmt.Scan(&choiceIdx)
+
+	var isValid bool = validateInput(choiceIdx, len(choices))
+
+	if isValid {
+		choiceIdx--
+		return choiceIdx, true
+	} else {
+		clearTerminal()
+		fmt.Println("invalid input, please enter input from 1-3")
+		return -1, false
 	}
 }
 
