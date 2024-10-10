@@ -33,3 +33,7 @@ go test
 ```sh
 ./game
 ```
+
+## Demo
+
+![Game Demo](docs/indosuit_game_demo.gif)
