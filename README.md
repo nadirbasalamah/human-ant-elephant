@@ -12,6 +12,12 @@ A simple game based on the "human, ant and elephant" suit game.
 ./game
 ```
 
+If you are using Windows. use this command.
+
+```sh
+./game.exe
+```
+
 ## How to Explore
 
 1. Clone this repository.
